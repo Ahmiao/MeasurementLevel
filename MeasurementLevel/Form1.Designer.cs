@@ -32,6 +32,7 @@
             this.Input = new System.Windows.Forms.Button();
             this.pointNum = new System.Windows.Forms.TextBox();
             this.Cal = new System.Windows.Forms.Button();
+            this.saveBt = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,17 +73,28 @@
             this.Cal.UseVisualStyleBackColor = true;
             this.Cal.Click += new System.EventHandler(this.Cal_Click);
             // 
+            // saveBt
+            // 
+            this.saveBt.Location = new System.Drawing.Point(32, 273);
+            this.saveBt.Name = "saveBt";
+            this.saveBt.Size = new System.Drawing.Size(116, 32);
+            this.saveBt.TabIndex = 4;
+            this.saveBt.Text = "保存Excel";
+            this.saveBt.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1295, 486);
+            this.Controls.Add(this.saveBt);
             this.Controls.Add(this.Cal);
             this.Controls.Add(this.pointNum);
             this.Controls.Add(this.Input);
             this.Controls.Add(this.dtView);
             this.Name = "Form1";
             this.Text = "Form1";
+         
             ((System.ComponentModel.ISupportInitialize)(this.dtView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -95,6 +107,7 @@
         private System.Windows.Forms.Button Input;
         private System.Windows.Forms.TextBox pointNum;
         private System.Windows.Forms.Button Cal;
+        private System.Windows.Forms.Button saveBt;
     }
 }
 

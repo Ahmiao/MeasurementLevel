@@ -93,11 +93,71 @@ namespace MeasurementLevel
         /// <param name="e"></param>
         private void Cal_Click(object sender, EventArgs e)
         {
-            double Ha, Hb;
-            Ha = Convert.ToDouble(dtView.Rows[0].Cells[6].Value);//Starting elevation
-            Hb = Convert.ToDouble(dtView.Rows[id].Cells[6].Value);//Ending elevation
-            double[] dis = new double[id+1];
+         
+            try
+            {
+                double Ha = 0, Hb = 0;
+                double[] Dis = new double[id + 1];//level route's distance
+                double[] Hd = new double[id + 1];//Height difference
+                double[] Hv = new double[id + 1];//Height difference correction
+                double[] Hved = new double[id + 1];//Corrected height difference correction
+                double DisSum = 0;
+                double HdSum = 0;
+                Ha = Convert.ToDouble(dtView.Rows[0].Cells[6].Value);//Starting elevation
+                Hb = Convert.ToDouble(dtView.Rows[id + 1].Cells[6].Value);//Ending elevation
+              
+                int num = 0;
+                //
+                for (int i = 1; i <= id + 1; i++)
+                {
+                    if (dtView.Rows[i].Cells[2].Value != null && dtView.Rows[i].Cells[3].Value != null)
+                    {
+                        Dis[num] = Convert.ToDouble(dtView.Rows[i].Cells[2].Value);
+                        DisSum += Dis[num];
+                        Hd[num] = Convert.ToDouble(dtView.Rows[i].Cells[3].Value);
+                        HdSum += Hd[num];
+                        num++;
+                    }
+                }
+                //calculate Height difference correction
+                double HSum = Hb - Ha;
+                double Fh = HdSum - HSum;
+                double Fha = Math.Round(20 * Math.Sqrt(DisSum), 0);
+                if(Math.Abs(Fh)>Math.Abs(Fha))
+                {
+                    MessageBox.Show("闭合差的允许值为：±" + Math.Abs(Fha).ToString());
+                }
+                double Vk = Math.Round(-Fh/DisSum,4);
+                num = 0;
+                for (int i = 1; i <= id + 1; i++)
+                {
+                    Hv[num] = Math.Round(Dis[num] * Vk,3);
+                    Hved[num] = Math.Round(Hd[num] + Hv[num],3);
 
+                    dtView.Rows[i].Cells[4].Value = Hv[num];
+                    dtView.Rows[i].Cells[5].Value = Hved[num];
+                    num++;
+                }
+                num = 0;
+                double[] result = new double[id + 1]; 
+                for(int i=1;i<=id+1;i++)
+                {
+                    Ha += Hved[num];
+                    result[num] = Ha;
+                    if(i<id+1)
+                    {
+                        dtView.Rows[i].Cells[6].Value = result[num];
+                    }
+                    num++;
+                }
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("请输入正确的格式的数据或者数据输入需要完整！");
+            }
+           
         }
+     
     }
 }
